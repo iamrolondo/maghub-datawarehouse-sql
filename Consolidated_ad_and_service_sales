@@ -1,0 +1,27 @@
+ 
+SELECT 
+dim_company.company_id,
+dim_company.company_name,
+    dim_publication.name,
+    dim_issue.iss_name,
+    dim_service.category,
+    dim_service.service_name,
+    sales_fact.gross AS gross,
+    sales_fact.net,
+sales_fact.barter,
+    service_tickets_fact.created_date,
+    dim_adsize.ad_size_name
+FROM 
+sales_fact
+LEFT JOIN 
+dim_company ON sales_fact.company_id = dim_company.company_id
+LEFT JOIN 
+dim_publication ON dim_publication.pub_id = sales_fact.pub_id
+LEFT JOIN 
+dim_issue ON dim_issue.issue_id = sales_fact.issue_id
+LEFT JOIN 
+dim_service ON dim_service.service_id = sales_fact.service_id
+LEFT JOIN 
+dim_adsize ON dim_adsize.ad_size_id = sales_fact.ad_size_id
+LEFT JOIN 
+service_tickets_fact ON service_tickets_fact.service_id = sales_fact.service_id
